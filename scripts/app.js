@@ -75,9 +75,10 @@ function init() {
   function createPlGrid() {
     for (let i = 0; i < cellCount; i++) {
       const cell = document.createElement('div')
-      // cell.innerText = i
+      cell.innerText = i
       playerGrid.appendChild(cell)
       cells.push(cell)
+      cell.classList.add('emptySquare')
     }
   }
 
@@ -100,9 +101,11 @@ function init() {
 
   const shipButtons = document.querySelectorAll('.ships')
   const startButton = document.getElementById('start')
-  const playersSquares = document.querySelectorAll()
+  const playersSquares = document.querySelectorAll('.emptySquare')
 
   // GLOBAL INFO
+
+  let extraShipSquares = 0
 
   let playersTurn = true // false is comp turn
 
@@ -114,13 +117,35 @@ function init() {
 
   // PRE-GAME
 
-  function handleShipButton() {
-    console.log('ship button pressed')
+  function handleShipButton(event) {
+    if (event.target.id === '2-ship') {
+      let extraShipSquares = 1
+    }
   }
+
+  function chooseSquare(event) {
+    let numOf = 0
+    let chosenSquare = event.target
+    numOf = parseInt(event.target.innerText)
+    event.target.classList.add('chosen')
+    console.log((parseInt(chosenSquare.innerText )) + 2)
+    let extraSquare = (event.target.innerText)
+  }
+
+
+
+
+
+
+
 
 
   shipButtons.forEach((ship) => {
     ship.addEventListener('click', handleShipButton)
+  })
+
+  playersSquares.forEach((square) => {
+    square.addEventListener('click', chooseSquare)
   })
 
 }

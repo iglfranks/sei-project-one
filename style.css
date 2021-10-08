@@ -95,5 +95,11 @@ h2 {
   height: 30px;
 }
 
+.emptySquare {
+  background-color: white;
+}
 
+.chosen {
+  background-color: red;
+}
 
