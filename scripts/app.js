@@ -103,6 +103,7 @@ function init() {
   const shipButtons = document.querySelectorAll('.ships')
   const startButton = document.getElementById('start')
   const resetButton = document.getElementById('reset')
+  const display = document.getElementById('winner-display')
 
   const playersSquares = document.querySelectorAll('.emptySquare')
 
@@ -149,12 +150,20 @@ function init() {
   function chooseSquare(event) {
     if (shipSelected === false) {
       window.alert('Please select a ship to place!')
-    } else {
+    } else if (rotationOn === false) {
       let chosenSquare = parseInt(cells[parseInt(event.target.innerText)].innerText)
       event.target.classList.add('chosen')
   
       for (let i = 0; i <= extraShipSquares; i++) {
         let extraSquare = cells[(chosenSquare + i)]
+        extraSquare.classList.add('chosen')
+      }
+    } else {
+      let chosenSquare = parseInt(cells[parseInt(event.target.innerText)].innerText)
+      event.target.classList.add('chosen')
+
+      for (let i = 0; i <= extraShipSquares; i++) {
+        let extraSquare = cells[chosenSquare + (10 * i)]
         extraSquare.classList.add('chosen')
       }
     }
@@ -175,13 +184,14 @@ function init() {
 
   function handleRotation(event) {
     const key = event.keyCode
-    console.log(key)
     if (key === 39) {
       rotationOn = true
       console.log(rotationOn)
+      display.innerText = 'Rotation is on, sending the ships down'
     } else if (key === 37) {
       rotationOn = false
       console.log(rotationOn)
+      display.innerText = 'Rotation is off, sending the ships right'
     }
   }
 
