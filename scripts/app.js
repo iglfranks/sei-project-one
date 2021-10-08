@@ -75,7 +75,7 @@ function init() {
   function createPlGrid() {
     for (let i = 0; i < cellCount; i++) {
       const cell = document.createElement('div')
-      cell.innerText = i
+      // cell.innerText = i
       playerGrid.appendChild(cell)
       cells.push(cell)
     }
@@ -88,7 +88,7 @@ function init() {
   function createCoGrid() {
     for (let i = 0; i < cellCount; i++) {
       const cell = document.createElement('div')
-      cell.innerText = i
+      // cell.innerText = i
       compGrid.appendChild(cell)
       cells.push(cell)
     }
@@ -96,7 +96,32 @@ function init() {
 
   createCoGrid()
 
-  
+  // DOCUMENT QUERIES
+
+  const shipButtons = document.querySelectorAll('.ships')
+  const startButton = document.getElementById('start')
+  const playersSquares = document.querySelectorAll()
+
+  // GLOBAL INFO
+
+  let playersTurn = true // false is comp turn
+
+  let playerShipCounter = 11
+  let compShipCounter = 11
+
+  let playerHit = false
+  let compHit = false
+
+  // PRE-GAME
+
+  function handleShipButton() {
+    console.log('ship button pressed')
+  }
+
+
+  shipButtons.forEach((ship) => {
+    ship.addEventListener('click', handleShipButton)
+  })
 
 }
 window.addEventListener('DOMContentLoaded', init)
