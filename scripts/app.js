@@ -102,9 +102,21 @@ function init() {
 
   const shipButtons = document.querySelectorAll('.ships')
   const startButton = document.getElementById('start')
+  const resetButton = document.getElementById('reset')
+
   const playersSquares = document.querySelectorAll('.emptySquare')
 
+  const twoShipButton = document.getElementById('2-ship')
+  const fourShipButton = document.getElementById('4-ship')
+  const fiveShipButton = document.getElementById('5-ship')
+
+
+
   // GLOBAL INFO
+
+  let shipSelected = false
+
+  let rotationOn = false
 
   let extraShipSquares = 0
 
@@ -120,33 +132,61 @@ function init() {
 
   function handleShipButton(event) {
     if (event.target.id === '2-ship') {
+      shipSelected = true
       extraShipSquares = 1
-      console.log(extraShipSquares)
+      twoShipButton.disabled = true
+    } else if (event.target.id === '4-ship') {
+      shipSelected = true
+      extraShipSquares = 3
+      fourShipButton.disabled = true
+    } else if (event.target.id === '5-ship') {
+      shipSelected = true
+      extraShipSquares = 4
+      fiveShipButton.disabled = true
     }
   }
 
   function chooseSquare(event) {
-    // let numOf = 0
-    // numOf = parseInt(event.target.innerText)
-    let chosenSquare = parseInt(cells[parseInt(event.target.innerText)].innerText)
-    console.log(chosenSquare)
-    console.log((chosenSquare + extraShipSquares))
-    let extraSquare = cells[(chosenSquare + extraShipSquares)]
-    console.log(extraSquare)
+    if (shipSelected === false) {
+      window.alert('Please select a ship to place!')
+    } else {
+      let chosenSquare = parseInt(cells[parseInt(event.target.innerText)].innerText)
+      event.target.classList.add('chosen')
+  
+      for (let i = 0; i <= extraShipSquares; i++) {
+        let extraSquare = cells[(chosenSquare + i)]
+        extraSquare.classList.add('chosen')
+      }
+    }
 
-    event.target.classList.add('chosen')
-    extraSquare.classList.add('chosen')
-    // console.log((parseInt(chosenSquare.innerText )) + 2)
-    
+    shipSelected = false
+  }
+
+  // function handleReset() {
+  //   for (i = 0; i < 100; i++) {
+  //     if (cells.classList.contains('chosen')) {
+  //       console.log('yes')
+  //     }
+  //   }
+
+  //   console.log(cells.classList)
+  // }
+
+
+  function handleRotation(event) {
+    const key = event.keyCode
+    console.log(key)
+    if (key === 39) {
+      rotationOn = true
+      console.log(rotationOn)
+    } else if (key === 37) {
+      rotationOn = false
+      console.log(rotationOn)
+    }
   }
 
 
-
-
-
-
-
-
+  document.addEventListener('keyup', handleRotation)
 
   shipButtons.forEach((ship) => {
     ship.addEventListener('click', handleShipButton)
@@ -155,6 +195,8 @@ function init() {
   playersSquares.forEach((square) => {
     square.addEventListener('click', chooseSquare)
   })
+
+  // resetButton.addEventListener('click', handleReset)
 
 }
 window.addEventListener('DOMContentLoaded', init)
