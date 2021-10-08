@@ -76,9 +76,10 @@ function init() {
     for (let i = 0; i < cellCount; i++) {
       const cell = document.createElement('div')
       cell.innerText = i
+      cell.classList.add('emptySquare')
+      cell.classList.add(i)
       playerGrid.appendChild(cell)
       cells.push(cell)
-      cell.classList.add('emptySquare')
     }
   }
 
@@ -119,17 +120,24 @@ function init() {
 
   function handleShipButton(event) {
     if (event.target.id === '2-ship') {
-      let extraShipSquares = 1
+      extraShipSquares = 1
+      console.log(extraShipSquares)
     }
   }
 
   function chooseSquare(event) {
-    let numOf = 0
-    let chosenSquare = event.target
-    numOf = parseInt(event.target.innerText)
+    // let numOf = 0
+    // numOf = parseInt(event.target.innerText)
+    let chosenSquare = parseInt(cells[parseInt(event.target.innerText)].innerText)
+    console.log(chosenSquare)
+    console.log((chosenSquare + extraShipSquares))
+    let extraSquare = cells[(chosenSquare + extraShipSquares)]
+    console.log(extraSquare)
+
     event.target.classList.add('chosen')
-    console.log((parseInt(chosenSquare.innerText )) + 2)
-    let extraSquare = (event.target.innerText)
+    extraSquare.classList.add('chosen')
+    // console.log((parseInt(chosenSquare.innerText )) + 2)
+    
   }
 
 
