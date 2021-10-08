@@ -129,6 +129,8 @@ function init() {
   let playerHit = false
   let compHit = false
 
+  let squaresHitByComp = []
+
   // PRE-GAME
 
   function handleShipButton(event) {
@@ -147,29 +149,80 @@ function init() {
     }
   }
 
-  function chooseSquare(event) {
-    if (shipSelected === false) {
-      window.alert('Please select a ship to place!')
-    } else if (rotationOn === false) {
-      let chosenSquare = parseInt(cells[parseInt(event.target.innerText)].innerText)
-      event.target.classList.add('chosen')
+  // --------------------------------- WORKING WITHOUT BOUNDARY ADJUSTMENT 
+
+  // function chooseSquare(event) {
+  //   if (shipSelected === false) {
+  //     window.alert('Please select a ship to place!')
+  //   } else if (rotationOn === false) {
+  //     let chosenSquare = parseInt(cells[parseInt(event.target.innerText)].innerText)
+  //     event.target.classList.add('chosen')
   
-      for (let i = 0; i <= extraShipSquares; i++) {
-        let extraSquare = cells[(chosenSquare + i)]
-        extraSquare.classList.add('chosen')
-      }
-    } else {
-      let chosenSquare = parseInt(cells[parseInt(event.target.innerText)].innerText)
-      event.target.classList.add('chosen')
+  //     for (let i = 0; i <= extraShipSquares; i++) {
+  //       let extraSquare = cells[(chosenSquare + i)]
+  //       extraSquare.classList.add('chosen')
+  //     }
+  //   } else {
+  //     let chosenSquare = parseInt(cells[parseInt(event.target.innerText)].innerText)
+  //     event.target.classList.add('chosen')
 
-      for (let i = 0; i <= extraShipSquares; i++) {
-        let extraSquare = cells[chosenSquare + (10 * i)]
-        extraSquare.classList.add('chosen')
-      }
-    }
+  //     for (let i = 0; i <= extraShipSquares; i++) {
+  //       let extraSquare = cells[chosenSquare + (10 * i)]
+  //       extraSquare.classList.add('chosen')
+  //     }
+  //   }
 
-    shipSelected = false
-  }
+  //   shipSelected = false
+  // }
+
+  // --------------------------------
+
+  // ------------------------------- NOT WORKING WITH BOUNDARY ADJUSTMENT
+
+
+  // function chooseSquare(event) {
+  //   if (shipSelected === false) {
+  //     window.alert('Please select a ship to place!')
+  //   } else if (rotationOn === false) {
+  //     let chosenSquare = parseInt(cells[parseInt(event.target.innerText)].innerText)
+
+  //     if (extraShipSquares === 1 && chosenSquare % width !== width + 1) {
+  //       console.log('wont work')
+  //     } else {
+  //       event.target.classList.add('chosen')
+  //     }
+
+  //     if (extraShipSquares === 3 && chosenSquare % width !== width + 3) {
+  //       console.log('wont work')
+  //     } else {
+  //       event.target.classList.add('chosen')
+  //     }
+      
+  
+  //     for (let i = 0; i <= extraShipSquares; i++) {
+  //       let extraSquare = cells[(chosenSquare + i)]
+  //       if (extraSquare % width !== width - 1) {
+  //         console.log('wont work')
+  //       } else {
+  //         extraSquare.classList.add('chosen')
+  //       }
+  //     }
+  //   } else {
+  //     let chosenSquare = parseInt(cells[parseInt(event.target.innerText)].innerText)
+  //     event.target.classList.add('chosen')
+
+  //     for (let i = 0; i <= extraShipSquares; i++) {
+  //       let extraSquare = cells[chosenSquare + (10 * i)]
+  //       extraSquare.classList.add('chosen')
+  //     }
+  //   }
+
+  //   shipSelected = false
+  // }
+
+  // ----------------------------------------------------
+
+  
 
   // function handleReset() {
   //   for (i = 0; i < 100; i++) {
