@@ -90,7 +90,9 @@ function init() {
   function createCoGrid() {
     for (let i = 0; i < cellCount; i++) {
       const cell = document.createElement('div')
-      // cell.innerText = i
+      cell.innerText = i
+      cell.classList.add('compEmptySquare')
+      cell.classList.add(i)
       compGrid.appendChild(cell)
       cells.push(cell)
     }
@@ -106,18 +108,21 @@ function init() {
   const display = document.getElementById('winner-display')
 
   const playersSquares = document.querySelectorAll('.emptySquare')
+  const compSquares = document.querySelectorAll('.compEmptySquare')
+  const playerTurnBox = document.getElementById('players-turn')
+  const compTurnBox = document.getElementById('comps-turn')
 
   const twoShipButton = document.getElementById('2-ship')
   const fourShipButton = document.getElementById('4-ship')
   const fiveShipButton = document.getElementById('5-ship')
 
-
-
   // GLOBAL INFO
 
   let shipSelected = false
+  let noOfShipsPlaced = 0
 
   let rotationOn = false
+  let compRotationOn = false
 
   let extraShipSquares = 0
 
@@ -132,6 +137,10 @@ function init() {
   let squaresHitByComp = []
 
   // PRE-GAME
+
+  const initGame = setTimeout(() => {
+    display.innerText = 'Welcome to Battleships! To begin, place all of your ships on the board and then press start!'
+  }, 10)
 
   function handleShipButton(event) {
     if (event.target.id === '2-ship') {
@@ -149,91 +158,48 @@ function init() {
     }
   }
 
-  // --------------------------------- WORKING WITHOUT BOUNDARY ADJUSTMENT 
+  function chooseSquare(event) {
+    if (shipSelected === false) {
+      window.alert('Please select a ship to place!')
+    } else if (rotationOn === false) {
+      let chosenSquare = parseInt(cells[parseInt(event.target.innerText)].innerText)
 
-  // function chooseSquare(event) {
-  //   if (shipSelected === false) {
-  //     window.alert('Please select a ship to place!')
-  //   } else if (rotationOn === false) {
-  //     let chosenSquare = parseInt(cells[parseInt(event.target.innerText)].innerText)
-  //     event.target.classList.add('chosen')
+      if (chosenSquare % width >= width - extraShipSquares) {
+        window.alert('That ship wont fit there! Please reset and try again.')
+      } else {
+        event.target.classList.add('chosen')
+        for (let i = 0; i <= extraShipSquares; i++) {
+          let extraSquare = cells[(chosenSquare + i)]
+          extraSquare.classList.add('chosen')
+        }
+        noOfShipsPlaced += 1
+        console.log(noOfShipsPlaced)
+      }
   
-  //     for (let i = 0; i <= extraShipSquares; i++) {
-  //       let extraSquare = cells[(chosenSquare + i)]
-  //       extraSquare.classList.add('chosen')
-  //     }
-  //   } else {
-  //     let chosenSquare = parseInt(cells[parseInt(event.target.innerText)].innerText)
-  //     event.target.classList.add('chosen')
+    
+    } else {
+      let chosenSquare = parseInt(cells[parseInt(event.target.innerText)].innerText)
 
-  //     for (let i = 0; i <= extraShipSquares; i++) {
-  //       let extraSquare = cells[chosenSquare + (10 * i)]
-  //       extraSquare.classList.add('chosen')
-  //     }
-  //   }
+      if (chosenSquare > (width * width) - (extraShipSquares * 10)) {
+        window.alert('That ship wont fit there! Please reset and try again.')
+      } else {
+        event.target.classList.add('chosen')
+        for (let i = 0; i <= extraShipSquares; i++) {
+          let extraSquare = cells[chosenSquare + (10 * i)]
+          extraSquare.classList.add('chosen')
+        }
+        noOfShipsPlaced += 1
+        console.log(noOfShipsPlaced)
+      }
 
-  //   shipSelected = false
-  // }
-
-  // --------------------------------
-
-  // ------------------------------- NOT WORKING WITH BOUNDARY ADJUSTMENT
-
-
-  // function chooseSquare(event) {
-  //   if (shipSelected === false) {
-  //     window.alert('Please select a ship to place!')
-  //   } else if (rotationOn === false) {
-  //     let chosenSquare = parseInt(cells[parseInt(event.target.innerText)].innerText)
-
-  //     if (extraShipSquares === 1 && chosenSquare % width !== width + 1) {
-  //       console.log('wont work')
-  //     } else {
-  //       event.target.classList.add('chosen')
-  //     }
-
-  //     if (extraShipSquares === 3 && chosenSquare % width !== width + 3) {
-  //       console.log('wont work')
-  //     } else {
-  //       event.target.classList.add('chosen')
-  //     }
       
-  
-  //     for (let i = 0; i <= extraShipSquares; i++) {
-  //       let extraSquare = cells[(chosenSquare + i)]
-  //       if (extraSquare % width !== width - 1) {
-  //         console.log('wont work')
-  //       } else {
-  //         extraSquare.classList.add('chosen')
-  //       }
-  //     }
-  //   } else {
-  //     let chosenSquare = parseInt(cells[parseInt(event.target.innerText)].innerText)
-  //     event.target.classList.add('chosen')
+    }
+    shipSelected = false
 
-  //     for (let i = 0; i <= extraShipSquares; i++) {
-  //       let extraSquare = cells[chosenSquare + (10 * i)]
-  //       extraSquare.classList.add('chosen')
-  //     }
-  //   }
-
-  //   shipSelected = false
-  // }
-
-  // ----------------------------------------------------
-
-  
-
-  // function handleReset() {
-  //   for (i = 0; i < 100; i++) {
-  //     if (cells.classList.contains('chosen')) {
-  //       console.log('yes')
-  //     }
-  //   }
-
-  //   console.log(cells.classList)
-  // }
-
+    if (noOfShipsPlaced === 3) {
+      display.innerText = 'All ships placed? Click Start to begin!'
+    }
+  }
 
   function handleRotation(event) {
     const key = event.keyCode
@@ -248,6 +214,51 @@ function init() {
     }
   }
 
+  // function handleReset() {
+  //   for (i = 0; i < 100; i++) {
+  //     if (cells.classList.contains('chosen')) {
+  //       console.log('yes')
+  //     }
+  //   }
+
+  //   console.log(cells.classList)
+  // }
+
+  // ------ GAME START ---------
+
+  function randomiseCompuerBoard() {
+
+  }
+
+  function runGame() {
+    randomiseCompuerBoard()
+    
+    if (playersTurn === true) {
+      playerTurnBox.classList.add('turn')
+
+      // write code for players turn here
+
+      // end code in playersTurn === false
+    }
+
+    if (playersTurn === false) {
+      compTurnBox.classList.add('turn')
+    }
+  }
+
+  function runGameInit() {
+    if (noOfShipsPlaced !== 3) {
+      window.alert('Please deploy your troops first!')
+    } else {
+      runGame()
+    }
+  }
+
+
+
+  compSquares.forEach((compSqu) => {
+    compSqu('click', handleClickingCompSqu)
+  })
 
   document.addEventListener('keyup', handleRotation)
 
@@ -258,6 +269,8 @@ function init() {
   playersSquares.forEach((square) => {
     square.addEventListener('click', chooseSquare)
   })
+
+  startButton.addEventListener('click', runGameInit)
 
   // resetButton.addEventListener('click', handleReset)
 
