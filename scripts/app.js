@@ -227,11 +227,19 @@ function init() {
   // ------ GAME START ---------
 
   function randomiseCompuerBoard() {
+    let randomCompSqu
+
+    randomCompSqu = Math.floor(Math.random(compSquares) * 99)
+    console.log('random comp square ->', randomCompSqu)
+    compRotationOn = Math.random() < 0.5
+    console.log(compRotationOn)
+    if (compRotationOn === false) {
+
+    }
 
   }
 
   function runGame() {
-    randomiseCompuerBoard()
     
     if (playersTurn === true) {
       playerTurnBox.classList.add('turn')
@@ -243,6 +251,10 @@ function init() {
 
     if (playersTurn === false) {
       compTurnBox.classList.add('turn')
+
+      // write code for a countdown timer, then computer takes turn
+
+      // end turn in playersTurn === true 
     }
   }
 
@@ -250,14 +262,18 @@ function init() {
     if (noOfShipsPlaced !== 3) {
       window.alert('Please deploy your troops first!')
     } else {
+      randomiseCompuerBoard()
       runGame()
     }
   }
 
+  function handleClickingCompSqu(event) {
+
+  }
 
 
   compSquares.forEach((compSqu) => {
-    compSqu('click', handleClickingCompSqu)
+    compSqu.addEventListener('click', handleClickingCompSqu)
   })
 
   document.addEventListener('keyup', handleRotation)

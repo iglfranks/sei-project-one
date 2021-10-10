@@ -109,6 +109,10 @@ h2 {
   background-color: red;
 }
 
+.compChosen {
+  background-color: orange;
+}
+
 .turn {
   width: 45px;
   height: 45px;
