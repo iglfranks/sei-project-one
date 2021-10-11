@@ -66,6 +66,15 @@ main {
 #separation {
   height: 400px;
   width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#countdown {
+  width: 30px;
+  height: 30px;
+  border: 2px solid black;
 }
 
 #ship-list {
@@ -117,5 +126,13 @@ h2 {
   width: 45px;
   height: 45px;
   background-color: red;
+}
+
+.hit {
+  background-color: green;
+}
+
+.shipHit {
+  background-color: black;
 }
 

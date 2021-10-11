@@ -107,6 +107,7 @@ function init() {
   const startButton = document.getElementById('start')
   const resetButton = document.getElementById('reset')
   const display = document.getElementById('winner-display')
+  const countdownTimer = document.getElementById('countdown')
 
   const playersSquares = document.querySelectorAll('.emptySquare')
   const compSquares = document.querySelectorAll('.compEmptySquare')
@@ -119,6 +120,7 @@ function init() {
 
   // GLOBAL INFO
 
+  let buttonLastSelected  
   let shipSelected = false
   let noOfShipsPlaced = 0
 
@@ -127,15 +129,15 @@ function init() {
 
   let extraShipSquares = 0
 
-  let playersTurn = true // false is comp turn
+  let gameStart = false
+
+  let playersTurn // false is comp turn
+
+  let playerChosenAttack
 
   let playerShipCounter = 11
   let compShipCounter = 11
 
-  let playerHit = false
-  let compHit = false
-
-  let squaresHitByComp = []
 
   // PRE-GAME
 
@@ -148,14 +150,17 @@ function init() {
       shipSelected = true
       extraShipSquares = 1
       twoShipButton.disabled = true
+      buttonLastSelected = twoShipButton
     } else if (event.target.id === '4-ship') {
       shipSelected = true
       extraShipSquares = 3
       fourShipButton.disabled = true
+      buttonLastSelected = fourShipButton
     } else if (event.target.id === '5-ship') {
       shipSelected = true
       extraShipSquares = 4
       fiveShipButton.disabled = true
+      buttonLastSelected = fiveShipButton
     }
   }
 
@@ -165,10 +170,9 @@ function init() {
     } else if (rotationOn === false) {
       let chosenSquare = parseInt(cells[parseInt(event.target.innerText)].innerText)
 
-      // put another condition if if statement about overalpping 
-
-      if (chosenSquare % width >= width - extraShipSquares) {
-        window.alert('That ship wont fit there! Please reset and try again.')
+      if (chosenSquare % width >= width - extraShipSquares || event.target.classList.contains('chosen') === true || cells[(parseInt(event.target.innerText)) + extraShipSquares].classList.contains('chosen') || cells[(parseInt(event.target.innerText)) + (extraShipSquares - 1)].classList.contains('chosen') || cells[(parseInt(event.target.innerText)) + (extraShipSquares - 2)].classList.contains('chosen') || cells[(parseInt(event.target.innerText)) + (extraShipSquares - 3)].classList.contains('chosen') || cells[(parseInt(event.target.innerText)) + (extraShipSquares - 4)].classList.contains('chosen')) {
+        window.alert('That ship wont fit there! Please try again.')
+        buttonLastSelected.disabled = false
       } else {
         event.target.classList.add('chosen')
         for (let i = 0; i <= extraShipSquares; i++) {
@@ -179,12 +183,14 @@ function init() {
         console.log(noOfShipsPlaced)
       }
   
+      // TO MAKE THEM NOT OVERLAP - if (cells[(parseInt(event.target.innerText)) + extraShipSquares].classList.contains('chosen'))
     
     } else {
       let chosenSquare = parseInt(cells[parseInt(event.target.innerText)].innerText)
 
-      if (chosenSquare > (width * width) - (extraShipSquares * 10)) {
-        window.alert('That ship wont fit there! Please reset and try again.')
+      if (chosenSquare > (width * width) - (extraShipSquares * 10) || event.target.classList.contains('chosen') === true) {
+        window.alert('That ship wont fit there! Please try again.')
+        buttonLastSelected.disabled = false
       } else {
         event.target.classList.add('chosen')
         for (let i = 0; i <= extraShipSquares; i++) {
@@ -236,72 +242,218 @@ function init() {
 
     // for 2 ship -----------
 
-    for (let i = 1; i < 1; i++) {
-      compRotationOn = false
-      // Math.random() < 0.5 <- code for randomising rotation
-      console.log(compRotationOn)
+    for (let i = 0; i < 1; i++) {
+      compRotationOn = Math.random() < 0.5 
+      // console.log(compRotationOn)
+
       if (compRotationOn === false) {
-        // randomCompSquNu = Math.floor(Math.random(compSquares) * 99)
-  
-        randomCompSqu = compCells[29]
-        if (randomCompSqu > (width * width) - (1 * 10)) {
+        randomCompSquNu = Math.floor(Math.random(compSquares) * 99)
+        randomCompSqu = compCells[randomCompSquNu]
+        if (parseInt(randomCompSqu.innerText) % width >= width - 1) {
           i--
           console.log('wont work')
         } else {
-          // randomCompSqu.classList.add('chosen')
-          // for (let i = 0; i <= 1; i++) {
-          //   compExtraSquare = compCells[29 + 1]
-          //   compExtraSquare.classList.add('chosen')
-          // }
+          randomCompSqu.classList.add('compChosen')
+          for (let i = 0; i <= 1; i++) {
+            compExtraSquare = compCells[randomCompSquNu + 1]
+            compExtraSquare.classList.add('compChosen')
+          }
           console.log('WILL work')
+        }
+
+      } else {
+        randomCompSquNu = Math.floor(Math.random(compSquares) * 99)
+        randomCompSqu = compCells[randomCompSquNu]
+        if (parseInt(randomCompSqu.innerText) > (width * width) - (1 * 10)) {
+          i--
+          console.log('wont work')
+        } else {
+          randomCompSqu.classList.add('compChosen')
+          for (let i = 0; i <= 1; i++) {
+            compExtraSquare = compCells[randomCompSquNu + (10 * 1)]
+            compExtraSquare.classList.add('compChosen')
+          }
+        }
+      }
+
+    }
+
+    // for 4 ship --------------
+    
+    compRotationOn = Math.random() < 0.5 
+    console.log(compRotationOn)
+
+    for (let i = 0; i < 1; i++) {
+      if (compRotationOn === false) {
+        randomCompSquNu = Math.floor(Math.random(compSquares) * 99)
+        randomCompSqu = compCells[randomCompSquNu]
+        if (parseInt(randomCompSqu.innerText) % width >= width - 3) {
+          i--
+          console.log('wont work')
+        } else {
+          randomCompSqu.classList.add('compChosen')
+          for (let i = 0; i <= 3; i++) {
+            compExtraSquare = compCells[randomCompSquNu + i]
+            compExtraSquare.classList.add('compChosen')
+          }
+          console.log('WILL work')
+        }
+      } else {
+        randomCompSquNu = Math.floor(Math.random(compSquares) * 99)
+        randomCompSqu = compCells[randomCompSquNu]
+        if (parseInt(randomCompSqu.innerText) > (width * width) - (3 * 10)) {
+          i--
+          console.log('wont work')
+        } else {
+          randomCompSqu.classList.add('compChosen')
+          for (let i = 0; i <= 3; i++) {
+            compExtraSquare = compCells[randomCompSquNu + (10 * i)]
+            compExtraSquare.classList.add('compChosen')
+          }
         }
       }
     }
 
-    
-    
-    // wrap in a for loop, do i--
-
-
-
-    // for 4 ship --------------
-
     // for 5 ship ---------------
 
-  }
+    compRotationOn = Math.random() < 0.5 
+    console.log(compRotationOn)
 
-  function runGame() {
-    
-    if (playersTurn === true) {
-      playerTurnBox.classList.add('turn')
-
-      // write code for players turn here
-
-      // end code in playersTurn === false
+    for (let i = 0; i < 1; i++) {
+      if (compRotationOn === false) {
+        randomCompSquNu = Math.floor(Math.random(compSquares) * 99)
+        randomCompSqu = compCells[randomCompSquNu]
+        if (parseInt(randomCompSqu.innerText) % width >= width - 4) {
+          i--
+          console.log('wont work')
+        } else {
+          randomCompSqu.classList.add('compChosen')
+          for (let i = 0; i <= 4; i++) {
+            compExtraSquare = compCells[randomCompSquNu + i]
+            compExtraSquare.classList.add('compChosen')
+          }
+          console.log('WILL work')
+        }
+      } else {
+        randomCompSquNu = Math.floor(Math.random(compSquares) * 99)
+        randomCompSqu = compCells[randomCompSquNu]
+        if (parseInt(randomCompSqu.innerText) > (width * width) - (4 * 10)) {
+          i--
+          console.log('wont work')
+        } else {
+          randomCompSqu.classList.add('compChosen')
+          for (let i = 0; i <= 4; i++) {
+            compExtraSquare = compCells[randomCompSquNu + (10 * i)]
+            compExtraSquare.classList.add('compChosen')
+          }
+        }
+      }
     }
 
-    if (playersTurn === false) {
-      compTurnBox.classList.add('turn')
-
-      // write code for a countdown timer, then computer takes turn
-
-      // end turn in playersTurn === true 
-    }
   }
 
   function runGameInit() {
     if (noOfShipsPlaced !== 3) {
       window.alert('Please deploy your troops first!')
     } else {
+      gameStart = true
       randomiseCompuerBoard()
+      playersTurn = true
+      startButton.disabled = true
       runGame()
+    }
+  }  
+
+  function handleClickingCompSqu(event) {
+    if (gameStart === false || playersTurn === false) {
+      window.alert('You are not allowed to attack yet, Commander!')
+    } else {
+      playerChosenAttack = event.target
+      console.log(playerChosenAttack)
+
+      if (event.target.classList.contains('hit') === false) {
+        if (playerChosenAttack.classList.contains('compChosen')) {
+          event.target.classList.add('hit')
+          event.target.classList.add('shipHit')
+          display.innerText = 'Target hit, Commander! Attack again!'
+          compShipCounter -= 1
+          console.log(compShipCounter)
+          checkWinner()
+        } else {
+          event.target.classList.add('hit')
+          console.log('missed')
+          playersTurn = false
+          playerTurnBox.classList.remove('turn')
+          console.log(playersTurn)
+          runGame()
+        }
+      } else {
+        window.alert('You have already attacked this space! Choose a different area.')
+      }
+
     }
   }
 
-  function handleClickingCompSqu(event) {
+  function runGame() {
+    if (playerShipCounter !== 0) {
+      if (playersTurn === true) {
+        playerTurnBox.classList.add('turn')
+        display.innerText = 'Commander! Please choose which area to attack!'
+      }
+    
+      if (playersTurn === false) {
+        compTurnBox.classList.add('turn')
+        display.innerText = 'We missed, Commander! Waiting for enemy attack...'
+  
 
+        let randomCompAttackNu = Math.floor(Math.random(playersSquares) * cells.length)
+        let randomCompChoice = cells[randomCompAttackNu]
+        cells.splice(randomCompAttackNu, 1)
+        console.log('array length', cells.length)
+        console.log('list of cells', cells)
+        console.log('random comp attack ->', randomCompChoice)
+          
+        let timeRemaining = 3
+        countdownTimer.innerText = timeRemaining
+    
+        const compTurnTimer = setInterval(() => {
+          timeRemaining--
+          countdownTimer.innerText = timeRemaining
+          if (timeRemaining === 0) {
+            clearInterval(compTurnTimer)
+            randomCompChoice.classList.add('hit')
+  
+            if (randomCompChoice.classList.contains('chosen') === true) {
+              randomCompChoice.classList.add('shipHit')
+              display.innerText = 'The enemy hit one of our ships! They attack again...'
+              playerShipCounter -= 1
+              // checkWinner()
+              runGame()
+            } else {
+              playersTurn = true
+              compTurnBox.classList.remove('turn')
+              runGame()
+            }
+  
+          }
+        }, 800)
+          
+      }
+    } else {
+      checkWinner()
+    }
+    
+  } 
+
+  function checkWinner() {
+    if (playerShipCounter === 0) {
+      display.innerText = 'The enemy has destroyed all our Commander... we have lost.'
+    } else if (compShipCounter === 0) {
+      display.innerText = 'We have won Commander!'
+    }
   }
 
+  // -----------------------------------------
 
   compSquares.forEach((compSqu) => {
     compSqu.addEventListener('click', handleClickingCompSqu)
