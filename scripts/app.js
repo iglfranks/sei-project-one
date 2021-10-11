@@ -42,30 +42,6 @@
 
 function init() { 
 
-  // GRID CREATION
-
-  // const grids = document.querySelectorAll('.grid')
-
-  // const width = 10
-  // const cellCount = width * width
-  // const cells = []
-
-  // function createGrid() {
-  //   for (let i = 0; i < cellCount; i++) {
-  //     const cell = document.createElement('div')
-  //     cell.innerText = i
-  //     console.log(grids)
-  //     grids.appendChild(cell)
-  //     cells.push(cell)
-  //   }
-  // }
-
-  // createGrid()
-
-  // grids.forEach((grid) => {
-  //   createGrid()
-  // })
-
   const playerGrid = document.querySelector('#player-grid')
 
   const width = 10
