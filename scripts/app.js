@@ -71,6 +71,7 @@ function init() {
   const width = 10
   const cellCount = width * width
   const cells = []
+  const compCells = []
 
   function createPlGrid() {
     for (let i = 0; i < cellCount; i++) {
@@ -89,12 +90,12 @@ function init() {
 
   function createCoGrid() {
     for (let i = 0; i < cellCount; i++) {
-      const cell = document.createElement('div')
-      cell.innerText = i
-      cell.classList.add('compEmptySquare')
-      cell.classList.add(i)
-      compGrid.appendChild(cell)
-      cells.push(cell)
+      const compCell = document.createElement('div')
+      compCell.innerText = i
+      compCell.classList.add('compEmptySquare')
+      compCell.classList.add(i)
+      compGrid.appendChild(compCell)
+      compCells.push(compCell)
     }
   }
 
@@ -164,6 +165,8 @@ function init() {
     } else if (rotationOn === false) {
       let chosenSquare = parseInt(cells[parseInt(event.target.innerText)].innerText)
 
+      // put another condition if if statement about overalpping 
+
       if (chosenSquare % width >= width - extraShipSquares) {
         window.alert('That ship wont fit there! Please reset and try again.')
       } else {
@@ -227,15 +230,43 @@ function init() {
   // ------ GAME START ---------
 
   function randomiseCompuerBoard() {
+    let randomCompSquNu
     let randomCompSqu
+    let compExtraSquare
 
-    randomCompSqu = Math.floor(Math.random(compSquares) * 99)
-    console.log('random comp square ->', randomCompSqu)
-    compRotationOn = Math.random() < 0.5
-    console.log(compRotationOn)
-    if (compRotationOn === false) {
+    // for 2 ship -----------
 
+    for (let i = 1; i < 1; i++) {
+      compRotationOn = false
+      // Math.random() < 0.5 <- code for randomising rotation
+      console.log(compRotationOn)
+      if (compRotationOn === false) {
+        // randomCompSquNu = Math.floor(Math.random(compSquares) * 99)
+  
+        randomCompSqu = compCells[29]
+        if (randomCompSqu > (width * width) - (1 * 10)) {
+          i--
+          console.log('wont work')
+        } else {
+          // randomCompSqu.classList.add('chosen')
+          // for (let i = 0; i <= 1; i++) {
+          //   compExtraSquare = compCells[29 + 1]
+          //   compExtraSquare.classList.add('chosen')
+          // }
+          console.log('WILL work')
+        }
+      }
     }
+
+    
+    
+    // wrap in a for loop, do i--
+
+
+
+    // for 4 ship --------------
+
+    // for 5 ship ---------------
 
   }
 
