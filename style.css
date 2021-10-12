@@ -1,14 +1,22 @@
 * {
   box-sizing: border-box;
+  font-family: 'JMH Typewriter dry', sans-serif;
 }
 
 body {
-  height: 700px;
+  height: 750px;
+  background-image: url('Assets/battlebackground.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 header {
-  background-color: black;
   height: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 50px;
 }
 
 main {
@@ -16,26 +24,32 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  /* margin: 0 auto; */
 }
 
 #displays {
   display: flex;
   width: 750px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   margin-top: 20px;
 }
 
 .turn-boxes {
   width: 50px;
   height: 50px;
-  border: 2px solid black
+  border: 2px solid black;
+  border-radius: 5px;
 }
 
 #winner-display {
   height: 65px;
   width: 300px;
-  border: 2px solid black
+  border: 2px solid black;
+  border-radius: 5px;
+  text-align: center;
+  padding: 5px;
+  background-color: rgba(126, 123, 123, 0.5);
 }
 
 #boards {
@@ -54,10 +68,16 @@ main {
   justify-content: center;
   height: 350px;
   width: 350px;
+  background-image: url('Assets/water.jpeg');
+  border-radius: 5px;
+  border-top: 20px solid rgb(110, 108, 108);
+  border-left: 10px solid rgb(110, 108, 108);
+  border-right: 10px solid rgb(110, 108, 108);
+  border-bottom: 10px solid rgb(110, 108, 108);
 }
 
 .grid div {
-  border: 1px solid lightgrey;
+  border: 1px solid rgba(51, 51, 51, 0.849);
   flex-grow: 1;
   height: 10%;
   width: 10%;
@@ -72,9 +92,15 @@ main {
 }
 
 #countdown {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 30px;
   height: 30px;
   border: 2px solid black;
+  border-radius: 5px;
+  background-color: rgba(126, 123, 123, 0.5);
+  text-align: center;
 }
 
 #ship-list {
@@ -84,7 +110,11 @@ main {
 }
 
 h2 {
-  font-size: 15px;
+  font-size: 14px;
+  border: 2px solid black;
+  border-radius: 5px;
+  background-color: rgba(126, 123, 123, 0.8);
+  padding: 3px;
 }
 
 #buttons {
@@ -92,6 +122,28 @@ h2 {
   align-items: center;
   justify-content: space-between;
   width: 100%;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 0px;
+}
+
+h3 {
+  margin: 0;
+  font-size: 12px;
+}
+
+#ac {
+  font-size: 9px;
+}
+
+.worth {
+  font-size: 8px;
+  margin: 0;
 }
 
 #start-reset {
@@ -111,15 +163,23 @@ h2 {
 }
 
 .emptySquare {
-  background-color: white;
+  font-size: 0px;
+}
+
+.compEmptySquare {
+  font-size: 0px;
+}
+
+.hover {
+  background-color: rgb(202, 11, 11, 0.5);
 }
 
 .chosen {
-  background-color: red;
+  background-color: rgb(117, 30, 30);
 }
 
 .compChosen {
-  background-color: orange;
+  background-color: rgb(192, 147, 65, 0);
 }
 
 .turn {
@@ -130,9 +190,15 @@ h2 {
 
 .hit {
   background-color: green;
+  /* background-image: url('Assets/water splash.png'); */
+  width: 35px;
+  height: 35px;
 }
 
 .shipHit {
   background-color: black;
 }
 
+.attackHover {
+  background-image: url('Assets/water splash.png');
+}

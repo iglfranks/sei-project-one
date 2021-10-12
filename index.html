@@ -6,16 +6,24 @@
     <title>Isaac's Battleships</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="scripts/app.js"></script>
+    <link href="http://fonts.cdnfonts.com/css/jmh-typewriter-dry" rel="stylesheet">
   </head>
   <body>
     <header>
+      Battleships
     </header>
+
     <main>
       <section id='displays'>
-        <div class='turn-boxes' id='players-turn'></div>
+        <div class='turn-boxes' id='players-turn'>
+          
+        </div>
         <div id='winner-display'></div>
-        <div class='turn-boxes' id='comps-turn'></div>
+        <div class='turn-boxes' id='comps-turn'>
+          
+        </div>
       </section>
+
       <section id='boards'>
         <div id='player-grid-wrapper'>
           <div class='grid' id='player-grid'></div>
@@ -27,6 +35,7 @@
           <div class= 'grid' id='comp-grid'></div>
         </div>
       </section>
+
       <section id='ship-list'>
         <div id='start-reset'>
           <button id='start'>Start</button>
@@ -34,11 +43,12 @@
         </div>
         <h2>Your Arsenal of Ships! Select a Boat and then Click on the Grid to Place.</h2>
         <div id='buttons'>
-          <button class='ships' id='2-ship'>2</button>
-          <button class='ships' id='4-ship'>4</button>
-          <button class='ships' id='5-ship'>5</button>
+          <button class='ships' id='2-ship'></button>
+          <button class='ships' id='4-ship'></button>
+          <button class='ships' id='5-ship'></button>
         </div>
       </section>
+
     </main>
   </body>
 </html>

@@ -119,24 +119,76 @@ function init() {
 
   // PRE-GAME
 
+  function handleReset() {
+
+    playersSquares.forEach((square) => {
+      if (square.classList.contains('chosen') === true) {
+        square.classList.remove('chosen')
+      } 
+
+      if (square.classList.contains('hit') === true) {
+        square.classList.remove('hit')
+      } 
+
+      if (square.classList.contains('shipHit') === true) {
+        square.classList.remove('shipHit')
+      } 
+    })
+
+    compSquares.forEach((square) => {
+      if (square.classList.contains('compChosen') === true) {
+        square.classList.remove('compChosen')
+      } 
+
+      if (square.classList.contains('hit') === true) {
+        square.classList.remove('hit')
+      } 
+
+      if (square.classList.contains('shipHit') === true) {
+        square.classList.remove('shipHit')
+      } 
+    })
+
+    playerShipCounter = 11
+    compShipCounter = 11
+    noOfShipsPlaced = 0
+    gameStart = false
+    extraShipSquares = 0
+    display.innerText = 'Welcome to Battleships! To begin, place all of your ships on the board and then press start!'
+    twoShipButton.disabled = false
+    fourShipButton.disabled = false
+    fiveShipButton.disabled = false
+    startButton.disabled = false
+  }
+
+  // ->>>>> FIX IT ^ MAKE IT SO IT ADDS BACK THE HIT SQUARES TO THE ARRAY
+
+
   const initGame = setTimeout(() => {
     display.innerText = 'Welcome to Battleships! To begin, place all of your ships on the board and then press start!'
+    fiveShipButton.innerText = 'Aircraft Carrier'
+    fourShipButton.innerText = 'Fighter'
+    twoShipButton.innerText = 'Frigate'
   }, 10)
 
   function handleShipButton(event) {
     if (event.target.id === '2-ship') {
+      console.log('2ship selected')
       shipSelected = true
       extraShipSquares = 1
+      display.innerText = 'Press right arrow to rotate the ships downwards, left arrow to rotate them to the right'
       twoShipButton.disabled = true
       buttonLastSelected = twoShipButton
     } else if (event.target.id === '4-ship') {
       shipSelected = true
       extraShipSquares = 3
+      display.innerText = 'Press right arrow to rotate the ships downwards, left arrow to rotate them to the right'
       fourShipButton.disabled = true
       buttonLastSelected = fourShipButton
     } else if (event.target.id === '5-ship') {
       shipSelected = true
       extraShipSquares = 4
+      display.innerText = 'Press right arrow to rotate the ships downwards, left arrow to rotate them to the right'
       fiveShipButton.disabled = true
       buttonLastSelected = fiveShipButton
     }
@@ -188,6 +240,132 @@ function init() {
   //   }
   // }
 
+
+
+  function handleRotation(event) {
+    const key = event.keyCode
+    if (key === 39) {
+      rotationOn = true
+      console.log(rotationOn)
+      display.innerText = 'Rotation is on, sending the ships down'
+    } else if (key === 37) {
+      rotationOn = false
+      console.log(rotationOn)
+      display.innerText = 'Rotation is off, sending the ships right'
+    }
+  }
+
+  function handleHover(event) {
+    if (rotationOn === false) {
+      let chosenSquare = parseInt(cells[parseInt(event.target.innerText)].innerText)
+
+      if (extraShipSquares === 1) {
+        event.target.classList.add('hover')
+        for (let i = 0; i <= extraShipSquares; i++) {
+          let extraSquare = cells[(chosenSquare + i)]
+          extraSquare.classList.add('hover')
+        }
+      } else if (extraShipSquares === 3) {
+        event.target.classList.add('hover')
+        for (let i = 0; i <= extraShipSquares; i++) {
+          let extraSquare = cells[(chosenSquare + i)]
+          extraSquare.classList.add('hover')
+        }
+      } else if (extraShipSquares === 4) {
+        event.target.classList.add('hover')
+        for (let i = 0; i <= extraShipSquares; i++) {
+          let extraSquare = cells[(chosenSquare + i)]
+          extraSquare.classList.add('hover')
+        }
+      }
+    } else {
+      playersSquares.forEach((square) => {
+        if (square.classList.contains('hover') === true) {
+          square.classList.remove('hover')
+        }
+      })
+      let chosenSquare = parseInt(cells[parseInt(event.target.innerText)].innerText)
+
+      if (extraShipSquares === 1) {
+        event.target.classList.add('hover')
+        for (let i = 0; i <= extraShipSquares; i++) {
+          let extraSquare = cells[chosenSquare + (10 * i)]
+          extraSquare.classList.add('hover')
+        }
+      } else if (extraShipSquares === 3) {
+        event.target.classList.add('hover')
+        for (let i = 0; i <= extraShipSquares; i++) {
+          let extraSquare = cells[chosenSquare + (10 * i)]
+          extraSquare.classList.add('hover')
+        }
+      } else if (extraShipSquares === 4) {
+        event.target.classList.add('hover')
+        for (let i = 0; i <= extraShipSquares; i++) {
+          let extraSquare = cells[chosenSquare + (10 * i)]
+          extraSquare.classList.add('hover')
+        }
+      }
+    }
+  }
+
+  function handleHoverLeave(event) {
+    if (rotationOn === false) {
+      playersSquares.forEach((square) => {
+        if (square.classList.contains('hover') === true) {
+          square.classList.remove('hover')
+        }
+      })
+      let chosenSquare = parseInt(cells[parseInt(event.target.innerText)].innerText)
+
+      if (extraShipSquares === 1) {
+        event.target.classList.remove('hover')
+        for (let i = 0; i <= extraShipSquares; i++) {
+          let extraSquare = cells[(chosenSquare + i)]
+          extraSquare.classList.remove('hover')
+        }
+      } else if (extraShipSquares === 3) {
+        event.target.classList.remove('hover')
+        for (let i = 0; i <= extraShipSquares; i++) {
+          let extraSquare = cells[(chosenSquare + i)]
+          extraSquare.classList.remove('hover')
+        }
+      } else if (extraShipSquares === 4) {
+        event.target.classList.remove('hover')
+        for (let i = 0; i <= extraShipSquares; i++) {
+          let extraSquare = cells[(chosenSquare + i)]
+          extraSquare.classList.remove('hover')
+        }
+      }
+    } else {
+      playersSquares.forEach((square) => {
+        if (square.classList.contains('hover') === true) {
+          square.classList.remove('hover')
+        }
+      })
+      let chosenSquare = parseInt(cells[parseInt(event.target.innerText)].innerText)
+
+      if (extraShipSquares === 1) {
+        event.target.classList.remove('hover')
+        for (let i = 0; i <= extraShipSquares; i++) {
+          let extraSquare = cells[chosenSquare + (10 * i)]
+          extraSquare.classList.remove('hover')
+        }
+      } else if (extraShipSquares === 3) {
+        event.target.classList.remove('hover')
+        for (let i = 0; i <= extraShipSquares; i++) {
+          let extraSquare = cells[chosenSquare + (10 * i)]
+          extraSquare.classList.remove('hover')
+        }
+      } else if (extraShipSquares === 4) {
+        event.target.classList.remove('hover')
+        for (let i = 0; i <= extraShipSquares; i++) {
+          let extraSquare = cells[chosenSquare + (10 * i)]
+          extraSquare.classList.remove('hover')
+        }
+      } 
+    }
+  } 
+
   function chooseSquare(event) {
     if (shipSelected === false) {
       window.alert('Please select a ship to place!')
@@ -199,14 +377,17 @@ function init() {
           window.alert('That ship wont fit there! Please try again.')
           buttonLastSelected.disabled = false
         } else {
+          console.log('clicked')
           event.target.classList.add('chosen')
           for (let i = 0; i <= extraShipSquares; i++) {
             let extraSquare = cells[(chosenSquare + i)]
             extraSquare.classList.add('chosen')
           }
           noOfShipsPlaced += 1
-          console.log(noOfShipsPlaced)
+          extraShipSquares = 0
+          console.log(extraShipSquares)
         }
+
       } else if (extraShipSquares === 3) {
         if (chosenSquare % width >= width - extraShipSquares || event.target.classList.contains('chosen') === true || cells[(parseInt(event.target.innerText)) + extraShipSquares].classList.contains('chosen') || cells[(parseInt(event.target.innerText)) + (extraShipSquares - 1)].classList.contains('chosen') || cells[(parseInt(event.target.innerText)) + (extraShipSquares - 2)].classList.contains('chosen')) {
           window.alert('That ship wont fit there! Please try again.')
@@ -218,8 +399,10 @@ function init() {
             extraSquare.classList.add('chosen')
           }
           noOfShipsPlaced += 1
-          console.log(noOfShipsPlaced)
+          extraShipSquares = 0
+          console.log(extraShipSquares)
         }
+
       } else if (extraShipSquares === 4) {
         if (chosenSquare % width >= width - extraShipSquares || event.target.classList.contains('chosen') === true || cells[(parseInt(event.target.innerText)) + extraShipSquares].classList.contains('chosen') || cells[(parseInt(event.target.innerText)) + (extraShipSquares - 1)].classList.contains('chosen') || cells[(parseInt(event.target.innerText)) + (extraShipSquares - 2)].classList.contains('chosen') || cells[(parseInt(event.target.innerText)) + (extraShipSquares - 3)].classList.contains('chosen')) {
           window.alert('That ship wont fit there! Please try again.')
@@ -231,7 +414,8 @@ function init() {
             extraSquare.classList.add('chosen')
           }
           noOfShipsPlaced += 1
-          console.log(noOfShipsPlaced)
+          extraShipSquares = 0
+          console.log(extraShipSquares)
         }
       }
     
@@ -249,8 +433,10 @@ function init() {
             extraSquare.classList.add('chosen')
           }
           noOfShipsPlaced += 1
-          console.log(noOfShipsPlaced)
+          extraShipSquares = 0
+          console.log(extraShipSquares)
         }
+
       } else if (extraShipSquares === 3) {
         if (chosenSquare > (width * width) - (extraShipSquares * 10) || event.target.classList.contains('chosen') === true || cells[(parseInt(event.target.innerText)) + (extraShipSquares * 10)].classList.contains('chosen') || cells[(parseInt(event.target.innerText)) + ((extraShipSquares * 10) - 10)].classList.contains('chosen') || cells[(parseInt(event.target.innerText)) + ((extraShipSquares * 10) - 20)].classList.contains('chosen')) {
           window.alert('That ship wont fit there! Please try again.')
@@ -262,8 +448,10 @@ function init() {
             extraSquare.classList.add('chosen')
           }
           noOfShipsPlaced += 1
-          console.log(noOfShipsPlaced)
+          extraShipSquares = 0
+          console.log(extraShipSquares)
         }
+
       } else if (extraShipSquares === 4) {
         if (chosenSquare > (width * width) - (extraShipSquares * 10) || event.target.classList.contains('chosen') === true || cells[(parseInt(event.target.innerText)) + (extraShipSquares * 10)].classList.contains('chosen') || cells[(parseInt(event.target.innerText)) + ((extraShipSquares * 10) - 10)].classList.contains('chosen') || cells[(parseInt(event.target.innerText)) + ((extraShipSquares * 10) - 20)].classList.contains('chosen') || cells[(parseInt(event.target.innerText)) + ((extraShipSquares * 10) - 30)].classList.contains('chosen')) {
           window.alert('That ship wont fit there! Please try again.')
@@ -275,13 +463,10 @@ function init() {
             extraSquare.classList.add('chosen')
           }
           noOfShipsPlaced += 1
-          console.log(noOfShipsPlaced)
+          extraShipSquares = 0
+          console.log(extraShipSquares)
         }
-      }
-
- 
-
-      
+      }  
     }
     shipSelected = false
 
@@ -289,29 +474,6 @@ function init() {
       display.innerText = 'All ships placed? Click Start to begin!'
     }
   }
-
-  function handleRotation(event) {
-    const key = event.keyCode
-    if (key === 39) {
-      rotationOn = true
-      console.log(rotationOn)
-      display.innerText = 'Rotation is on, sending the ships down'
-    } else if (key === 37) {
-      rotationOn = false
-      console.log(rotationOn)
-      display.innerText = 'Rotation is off, sending the ships right'
-    }
-  }
-
-  // function handleReset() {
-  //   for (i = 0; i < 100; i++) {
-  //     if (cells.classList.contains('chosen')) {
-  //       console.log('yes')
-  //     }
-  //   }
-
-  //   console.log(cells.classList)
-  // }
 
   // ------ GAME START ---------
 
@@ -444,6 +606,18 @@ function init() {
     }
   }  
 
+  function attackHover(event) {
+    if (gameStart === true && playersTurn === true) {
+      event.target.classList.add('attackHover')
+    }
+  }
+
+  function attackHoverLeave(event) {
+    if (gameStart === true) {
+      event.target.classList.remove('attackHover')
+    }
+  }
+
   function handleClickingCompSqu(event) {
     if (gameFinished === true) {
       window.alert('Please reset/refresh to begin again!')
@@ -531,9 +705,11 @@ function init() {
         checkWinner()
       }
     }
-    
-    
   } 
+
+  // function compConsecTurn() {
+    
+  // }
 
   function checkWinner() {
     if (playerShipCounter === 0) {
@@ -549,6 +725,8 @@ function init() {
 
   compSquares.forEach((compSqu) => {
     compSqu.addEventListener('click', handleClickingCompSqu)
+    compSqu.addEventListener('mouseenter', attackHover)
+    compSqu.addEventListener('mouseleave', attackHoverLeave)
   })
 
   document.addEventListener('keyup', handleRotation)
@@ -559,11 +737,13 @@ function init() {
 
   playersSquares.forEach((square) => {
     square.addEventListener('click', chooseSquare)
+    square.addEventListener('mouseenter', handleHover)
+    square.addEventListener('mouseleave', handleHoverLeave)
   })
 
   startButton.addEventListener('click', runGameInit)
 
-  // resetButton.addEventListener('click', handleReset)
+  resetButton.addEventListener('click', handleReset)
 
 }
 window.addEventListener('DOMContentLoaded', init)
