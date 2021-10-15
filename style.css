@@ -4,7 +4,7 @@
 }
 
 body {
-  height: 900px;
+  height: 100vh;
   background-image: url('./Assets/battlebackground.jpeg');
   background-size: cover;
   background-position: center;
