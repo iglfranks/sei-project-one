@@ -189,27 +189,21 @@ h3 {
 .turn {
   width: 45px;
   height: 45px;
-  /* background-color: red; */
-  background-image: url('Assets/greenliugt.gif');
+  background-image: url('./Assets/greenliugt.gif');
   background-size: cover;
 }
 
 .hit {
   background-color: rgb(99, 193, 209, 0.5);
-  /* background-image: url('Assets/splash gif.gif');
-  background-size: cover; */
   width: 35px;
   height: 35px;
 }
 
 .shipHit {
-  /* background-color: black; */
-  /* background-image: url('Assets/explosion3.png'); */
   background-color: rgb(197, 181, 31, 0.5);
-  /* background-size: cover; */
 }
 
 .attackHover {
-  background-image: url('Assets/targetgif.gif');
+  background-image: url('./Assets/targetgif.gif');
   background-size: cover;
 }

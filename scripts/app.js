@@ -167,9 +167,6 @@ function init() {
     // createPlGrid()
   }
 
-  // ->>>>> FIX IT ^ MAKE IT SO IT ADDS BACK THE HIT SQUARES TO THE ARRAY
-
-
   const initGame = setTimeout(() => {
     display.innerText = 'Welcome to Battleships! To begin, place all of your ships on the board and then press start!'
     fiveShipButton.innerText = 'Aircraft Carrier'
@@ -669,10 +666,6 @@ function init() {
       }
     }
   } 
-
-  // function compConsecTurn() {
-    
-  // }
 
   function checkWinner() {
     if (playerShipCounter === 0) {
