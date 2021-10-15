@@ -5,7 +5,7 @@
 
 body {
   height: 750px;
-  background-image: url('Assets/battlebackground.jpeg');
+  background-image: url('./Assets/battlebackground.jpeg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -68,7 +68,7 @@ main {
   justify-content: center;
   height: 350px;
   width: 350px;
-  background-image: url('Assets/water.jpeg');
+  background-image: url('./Assets/water.jpeg');
   border-radius: 5px;
   border-top: 20px solid rgb(110, 108, 108);
   border-left: 10px solid rgb(110, 108, 108);
@@ -155,14 +155,14 @@ h3 {
 #start, #reset {
   width: 100px;
   height: 30px;
-  background-image: url('Assets/industrial-metal-plate-on-vintage-808886.jpeg');
+  background-image: url('./Assets/industrial-metal-plate-on-vintage-808886.jpeg');
   background-size: cover;
 }
 
 .ships {
   width: 100px;
   height: 30px;
-  background-image: url('Assets/industrial-metal-plate-on-vintage-808886.jpeg');
+  background-image: url('./Assets/industrial-metal-plate-on-vintage-808886.jpeg');
   background-size: cover;
 }
 
