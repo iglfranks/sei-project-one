@@ -98,6 +98,116 @@ I separated out the different functions into two sections; one for pre-game and 
 
 ![Battleships BUILD PIC 2](https://i.ibb.co/YkQY6S1/Screenshot-2022-01-24-at-13-22-33.png)
 
+After the grid is created on launch, the player chooses one of the 3 ship buttons to place on the board, using the arrow keys to change the rotation from horizontal to vertical. The hover previews of where the ship is going to placed are decided by the button being pressed, setting a variable to the number of squares which will need to have their classes changed (further details are shown below in the 'Featured code section'.
+
+```javascript
+
+function handleRotation(event) {
+    const key = event.keyCode
+    if (key === 39) {
+      rotationOn = true
+      console.log(rotationOn)
+      display.innerText = 'Rotation is on, sending the ships down'
+    } else if (key === 37) {
+      rotationOn = false
+      console.log(rotationOn)
+      display.innerText = 'Rotation is off, sending the ships right'
+    }
+  }
+
+```
+
+Once all ships have been placed, the player presses start, randomising where the computer places their ships. This function also contains logic which stops the ships from being placed in impossible locations (i.e. going off the board), or from overlapping each other. The example below shows the functions for the computer placement of the ship worth 2 spaces.
+
+```javascript
+
+for (let i = 0; i < 1; i++) {
+      compRotationOn = Math.random() < 0.5 
+
+      if (compRotationOn === false) {
+        randomCompSquNu = Math.floor(Math.random(compSquares) * 99)
+        randomCompSqu = compCells[randomCompSquNu]
+        if (parseInt(randomCompSqu.innerText) % width >= width - 1 || randomCompSqu.classList.contains('compChosen') === true || compCells[(parseInt(randomCompSqu.innerText)) + 1].classList.contains('compChosen')) {
+          i--
+          console.log('wont work')
+        } else {
+          randomCompSqu.classList.add('compChosen')
+          for (let i = 0; i <= 1; i++) {
+            compExtraSquare = compCells[randomCompSquNu + 1]
+            compExtraSquare.classList.add('compChosen')
+          }
+          console.log('WILL work')
+        }
+
+      } else {
+        randomCompSquNu = Math.floor(Math.random(compSquares) * 99)
+        randomCompSqu = compCells[randomCompSquNu]
+        if (parseInt(randomCompSqu.innerText) > (width * width) - (1 * 10) || randomCompSqu.classList.contains('compChosen') === true || compCells[(parseInt(randomCompSqu.innerText)) + 10].classList.contains('compChosen')) {
+          i--
+          console.log('wont work')
+        } else {
+          randomCompSqu.classList.add('compChosen')
+          for (let i = 0; i <= 1; i++) {
+            compExtraSquare = compCells[randomCompSquNu + (10 * 1)]
+            compExtraSquare.classList.add('compChosen')
+          }
+        }
+      }
+
+    }
+```
+
+The number of ship squares each player has left is set to 11 before the game starts and is reduced by 1 each time a square is hit. A function is run after each turn to check if a player has won befotre executing the necessary commands.
+
+```javascript
+function runGame() {
+    if (gameFinished === true) {
+      window.alert('Please reset/refresh to begin again!')
+    } else {
+      if (playerShipCounter !== 0) {
+        if (playersTurn === true) {
+          playerTurnBox.classList.add('turn')
+          display.innerText = 'Commander! Please choose which area to attack!'
+        }
+      
+        if (playersTurn === false) {
+          compTurnBox.classList.add('turn')
+          display.innerText = 'We missed, Commander! Waiting for enemy attack...'
+          let randomCompAttackNu = Math.floor(Math.random(playersSquares) * cells.length)
+          let randomCompChoice = cells[randomCompAttackNu]
+          cells.splice(randomCompAttackNu, 1)
+            
+          let timeRemaining = 3
+          countdownTimer.innerText = timeRemaining
+      
+          const compTurnTimer = setInterval(() => {
+            timeRemaining--
+            countdownTimer.innerText = timeRemaining
+            if (timeRemaining === 0) {
+              clearInterval(compTurnTimer)
+              randomCompChoice.classList.add('hit')
+    
+              if (randomCompChoice.classList.contains('chosen') === true) {
+                randomCompChoice.classList.add('shipHit')
+                display.innerText = 'The enemy hit one of our ships! They attack again...'
+                playerShipCounter -= 1
+                runGame()
+              } else {
+                playersTurn = true
+                compTurnBox.classList.remove('turn')
+                runGame()
+              }
+    
+            }
+          }, 800)
+            
+        }
+      } else {
+        checkWinner()
+      }
+    }
+  } 
+```
 
 
 
