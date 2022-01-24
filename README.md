@@ -177,7 +177,7 @@ As a first solo project, I was thrown into the deep end of the mental processes 
 
 In terms of the project itself, I thoroughly enjoyed the aspect of creating logic for the player’s moves and then finding ways to replicate it in an automated method that runs smoothly and appears as if the user is playing against another human rather than the AI.
 
-## Potential Extra Features to Add
+## Potential Extra Features to add
 
 - With more time I would have liked to incorporate some refinements to improve overall experience and create a more challenging game.
 
