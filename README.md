@@ -93,7 +93,6 @@ Before being signed off and starting to code, I was required to write up a plan 
 
 I separated out the different functions into two sections; one for pre-game and another for during gameplay. Pre-game functions consisted of loading the page correctly, allowing the player to place ships, as well as the hover functions. Functions during the game involved randomly placing the computer’s ships, attacking a computer square, the computer’s response, and ultimately detecting if someone has won.
 
-
 ![Battleships BUILD PIC 1](https://i.ibb.co/3sL7pCv/Screenshot-2022-01-24-at-13-20-07.png)
 
 ![Battleships BUILD PIC 2](https://i.ibb.co/YkQY6S1/Screenshot-2022-01-24-at-13-22-33.png)
@@ -117,7 +116,23 @@ function handleRotation(event) {
 
 ```
 
-Once all ships have been placed, the player presses start, randomising where the computer places their ships. This function also contains logic which stops the ships from being placed in impossible locations (i.e. going off the board), or from overlapping each other. The example below shows the functions for the computer placement of the ship worth 2 spaces.
+Once all ships have been placed, pressing start initiates the 'randomise computer board' function, which is only run if the number of ships placed is equal to 3. I used window alerts as a main method of communication between the game and player as they are obvious and convey exact instructions and reasons as to why there is an issue.
+
+```javascript
+function runGameInit() {
+    if (noOfShipsPlaced !== 3) {
+      window.alert('Please deploy your troops first!')
+    } else {
+      gameStart = true
+      randomiseCompuerBoard()
+      playersTurn = true
+      startButton.disabled = true
+      runGame()
+    }
+  }
+```
+
+This function also contains logic which stops the ships from being placed in impossible locations (i.e. going off the board), or from overlapping each other. The example below shows the functions for the computer placement of the ship worth 2 spaces.
 
 ```javascript
 
@@ -157,7 +172,41 @@ for (let i = 0; i < 1; i++) {
     }
 ```
 
-The number of ship squares each player has left is set to 11 before the game starts and is reduced by 1 each time a square is hit. A function is run after each turn to check if a player has won befotre executing the necessary commands.
+I set a variable to act as each player's 'life' count, set at 11 which is the total number of ship squares on their board, and it is reduced by 1 each time a square is hit. A function is run after each turn to check if a player has won befotre executing the necessary commands. There are two separate functions for the player and computer's turn, each in built with the ability for a consecutive turn if they successfully hit a ship. This logic was written once again with if-else statements and classes, with necessary error handling to tackle the issue of a player trying to attack the same square again.
+
+```javascript
+function handleClickingCompSqu(event) {
+    if (gameFinished === true) {
+      window.alert('Please reset/refresh to begin again!')
+    } else {
+      if (gameStart === false || playersTurn === false) {
+        window.alert('You are not allowed to attack yet, Commander!')
+      } else {
+        playerChosenAttack = event.target
+        console.log(playerChosenAttack)
+  
+        if (event.target.classList.contains('hit') === false) {
+          if (playerChosenAttack.classList.contains('compChosen')) {
+            event.target.classList.add('hit')
+            event.target.classList.add('shipHit')
+            display.innerText = 'Target hit, Commander! Attack again!'
+            compShipCounter -= 1
+            checkWinner()
+          } else {
+            event.target.classList.add('hit')
+            console.log('missed')
+            playersTurn = false
+            playerTurnBox.classList.remove('turn')
+            runGame()
+          }
+        } else {
+          window.alert('You have already attacked this space! Choose a different area.')
+        }
+  
+      }
+    }
+  }
+```
 
 ```javascript
 function runGame() {
@@ -208,8 +257,6 @@ function runGame() {
     }
   } 
 ```
-
-
 
 
 
