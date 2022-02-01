@@ -338,7 +338,7 @@ In terms of the project itself, I thoroughly enjoyed the aspect of creating logi
 
 - With more time I would have liked to incorporate some refinements to improve overall experience and create a more challenging game.
 
-- A more ‘intelligent AI’, which would make the computer attack a square adjacent to the a square it has just hit on the previous turn.
+- A more ‘intelligent AI’, which would make the computer attack a square adjacent to the square it has just hit on the previous turn.
 - The ability to change difficulty would change the accuracy of the computer depending on what the user has selected. This would be accomplished by adjusting the radius of squares the computer can hit the turn after it has successfully hit a player’s square.
 - A scoring system to keep track of player/computer wins.
 
